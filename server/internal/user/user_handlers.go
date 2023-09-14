@@ -103,15 +103,6 @@ func (h *Handler) CreateUser(ctx iris.Context) {
 }
 
 func (h *Handler) UpdateUser(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := definitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
 	var userReq definitions.UpdateUserReq
 
 	if err := ctx.ReadJSON(&userReq); err != nil {

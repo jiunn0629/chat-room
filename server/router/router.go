@@ -21,24 +21,24 @@ func InitRouter(app *iris.Application,
 	userRoute := app.Party("/user")
 	{
 		userRoute.Post("", userHandler.CreateUser)
-		userRoute.Put("", userHandler.UpdateUser)
-		userRoute.Get("/{userId}", userHandler.GetUser)
-		userRoute.Get("/{userId}/photo", userHandler.GetUserPhoto)
-		userRoute.Post("/{userId}/photo", userHandler.SaveUserPhoto)
-		userRoute.Post("/{userId}/friend", userHandler.AddFriend)
-		userRoute.Get("/{userId}/friends", userHandler.GetFriends)
-		userRoute.Get("/{userId}/groups", userHandler.GetGroup)
-		userRoute.Put("/{userId}/friends/{friendId}", userHandler.ModifyFriendStatus)
+		userRoute.Put("", RequireLogin, userHandler.UpdateUser)
+		userRoute.Get("/{userId}", RequireLogin, userHandler.GetUser)
+		userRoute.Get("/{userId}/photo", RequireLogin, userHandler.GetUserPhoto)
+		userRoute.Post("/{userId}/photo", RequireLogin, userHandler.SaveUserPhoto)
+		userRoute.Post("/{userId}/friend", RequireLogin, userHandler.AddFriend)
+		userRoute.Get("/{userId}/friends", RequireLogin, userHandler.GetFriends)
+		userRoute.Get("/{userId}/groups", RequireLogin, userHandler.GetGroup)
+		userRoute.Put("/{userId}/friends/{friendId}", RequireLogin, userHandler.ModifyFriendStatus)
 	}
 
 	chatRoomRoute := app.Party("/chat-room")
 	{
-		chatRoomRoute.Get("", chatRoomHandler.GetChatRooms)
-		chatRoomRoute.Get("/{chatRoomId}", chatRoomHandler.GetChatRoom)
-		chatRoomRoute.Get("/{chatRoomId}/message", chatRoomHandler.GetChatRoomMessage)
-		chatRoomRoute.Post("", chatRoomHandler.CreateChatRoom)
-		chatRoomRoute.Get("/user/{userId}/friend/{friendId}", chatRoomHandler.UseUserIdFriendIdGetChatRoom)
-		chatRoomRoute.Get("/ws", chatRoomHandler.ConnectWs)
+		chatRoomRoute.Get("", RequireLogin, chatRoomHandler.GetChatRooms)
+		chatRoomRoute.Get("/{chatRoomId}", RequireLogin, chatRoomHandler.GetChatRoom)
+		chatRoomRoute.Get("/{chatRoomId}/message", RequireLogin, chatRoomHandler.GetChatRoomMessage)
+		chatRoomRoute.Post("", RequireLogin, chatRoomHandler.CreateChatRoom)
+		chatRoomRoute.Get("/user/{userId}/friend/{friendId}", RequireLogin, chatRoomHandler.UseUserIdFriendIdGetChatRoom)
+		chatRoomRoute.Get("/ws", RequireLogin, chatRoomHandler.ConnectWs)
 	}
 
 }
