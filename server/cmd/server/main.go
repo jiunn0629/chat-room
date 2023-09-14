@@ -1,7 +1,7 @@
 package main
 
 import (
-	"chat-server/db"
+	"chat-server/db/sqlite"
 	"chat-server/internal/app"
 	"chat-server/internal/auth"
 	chat_room "chat-server/internal/chat-room"
@@ -12,7 +12,8 @@ import (
 
 func main() {
 	app := app.NewApp()
-	dbConn, err := db.NewDatabase()
+	//dbConn, err := postgres.NewDatabase()
+	dbConn, err := sqlite.NewDatabase()
 	if err != nil {
 		log.Fatalf("連線至資料庫失敗")
 	}
