@@ -3,8 +3,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {AddFriendRes} from "../../defitiions/friends-defition";
 import {FriendsService} from "../../services/friends.service";
 import {first, switchMap} from "rxjs";
-import {ToastService} from "../../../../shared/services/toast.service";
 import {ChatRoomService} from "../../../../shared/services/chat-room.service";
+import {SnackbarService} from "../../../../shared/services/snackbar.service";
 
 @Component({
     selector: 'app-friends-confirm',
@@ -15,7 +15,7 @@ export class FriendsConfirmComponent {
     public imageSrc = '../../../assets/images/user.png';
     private friendService: FriendsService = inject(FriendsService);
     private chatRoomService: ChatRoomService = inject(ChatRoomService);
-    private toastService: ToastService = inject(ToastService);
+    private snackbarService: SnackbarService = inject(SnackbarService);
     private dialogRef: MatDialogRef<FriendsConfirmComponent> = inject(MatDialogRef);
 
     constructor(
@@ -35,10 +35,10 @@ export class FriendsConfirmComponent {
         ).subscribe({
             next: res => {
                 if (res.isSuccess) {
-                    this.toastService.showSuccess({title: '成功', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarSuccessConfig);
                     this.dialogRef.close({refresh: true});
                 } else {
-                    this.toastService.showError({title: '失敗', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {

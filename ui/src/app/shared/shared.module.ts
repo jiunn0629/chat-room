@@ -6,12 +6,12 @@ import {UserService} from "./services/user.service";
 import {ChatRoomService} from "./services/chat-room.service";
 import {HttpClientModule} from "@angular/common/http";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
-import { OrderByPipe } from './pipes/order-by.pipe';
+import {OrderByPipe} from './pipes/order-by.pipe';
 
 @NgModule({
     declarations: [
-    OrderByPipe
-  ],
+        OrderByPipe
+    ],
     imports: [
         CommonModule,
         AngularMaterialModule,

@@ -1,8 +1,8 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {first} from "rxjs";
 import {User} from "../../shared/definitions/shared.definitions";
-import {ToastService} from "../../shared/services/toast.service";
 import {UserService} from "../../shared/services/user.service";
+import {SnackbarService} from "../../shared/services/snackbar.service";
 
 @Component({
     selector: 'app-settings-page',
@@ -11,7 +11,7 @@ import {UserService} from "../../shared/services/user.service";
 })
 export class SettingsPageComponent implements OnInit {
     public user: User | undefined;
-    private toastService: ToastService = inject(ToastService);
+    private snackbarService: SnackbarService = inject(SnackbarService);
     private userService: UserService = inject(UserService);
 
     ngOnInit() {
@@ -24,7 +24,7 @@ export class SettingsPageComponent implements OnInit {
                 if (res.isSuccess) {
                     this.user = res.data;
                 } else {
-                    this.toastService.showError({title: '錯誤', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {

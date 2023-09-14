@@ -5,8 +5,8 @@ import {
     OnInit,
 } from '@angular/core';
 import {SettingService} from "../../services/setting.service";
-import {ToastService} from "../../../../shared/services/toast.service";
 import {User} from "../../../../shared/definitions/shared.definitions";
+import {SnackbarService} from "../../../../shared/services/snackbar.service";
 
 @Component({
     selector: 'app-settings-profile',
@@ -15,7 +15,7 @@ import {User} from "../../../../shared/definitions/shared.definitions";
 })
 export class SettingsProfileComponent implements OnInit {
     private settingService: SettingService = inject(SettingService);
-    private toastService: ToastService = inject(ToastService);
+    private snackbarService: SnackbarService = inject(SnackbarService);
     @Input() user: User | undefined;
 
 
@@ -47,10 +47,10 @@ export class SettingsProfileComponent implements OnInit {
         this.settingService.uploadUserPhoto(localStorage.getItem('userID')!, photo).subscribe({
             next: res => {
                 if (res.isSuccess) {
-                    this.toastService.showSuccess({title: '成功', text: res.message});
+                    this.snackbarService.open(res.message,'',this.snackbarService.snackbarSuccessConfig);
                     // this.onGetUserPhoto();
                 } else {
-                    this.toastService.showError({title: '失敗', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {

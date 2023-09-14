@@ -171,3 +171,28 @@ app-friends-page, app-chat-page {
 .chip.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled){
   background-color: $custom-chip-background-color;
 }
+
+// snackbar
+.snackbar-success {
+  .mdc-snackbar__surface{
+    color: black;
+    background-color: $custom-primary !important;
+  }
+  .mat-mdc-snack-bar-actions{
+    button{
+      color: black!important;
+    }
+  }
+}
+
+.snackbar-error {
+  .mdc-snackbar__surface{
+    color: white;
+    background-color: $custom-danger !important;
+  }
+  .mat-mdc-snack-bar-actions{
+    button{
+      color: white!important;
+    }
+  }
+}

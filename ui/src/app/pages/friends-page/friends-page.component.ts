@@ -3,7 +3,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {FriendsAddComponent} from "../../@chat-ui/friends/components/friends-add/friends-add.component";
 import {first} from "rxjs";
 import {GroupAddComponent} from "../../@chat-ui/friends/components/group-add/group-add.component";
-import {ToastService} from "../../shared/services/toast.service";
 import {FriendsListComponent} from "../../@chat-ui/friends/components/friends-list/friends-list.component";
 import {SendListComponent} from "../../@chat-ui/friends/components/send-list/send-list.component";
 import {PendingListComponent} from "../../@chat-ui/friends/components/pending-list/pending-list.component";
@@ -11,6 +10,7 @@ import {UserService} from "../../shared/services/user.service";
 import {ChatRoom, User} from "../../shared/definitions/shared.definitions";
 import {FriendsService} from "../../@chat-ui/friends/services/friends.service";
 import {AddFriendRes} from "../../@chat-ui/friends/defitiions/friends-defition";
+import {SnackbarService} from "../../shared/services/snackbar.service";
 
 @Component({
     selector: 'app-friends-page',
@@ -25,7 +25,7 @@ export class FriendsPageComponent implements OnInit {
     public groupList: ChatRoom[] = [];
     private userService: UserService = inject(UserService);
     private friendsService: FriendsService = inject(FriendsService);
-    private toastService: ToastService = inject(ToastService);
+    private snackbarService: SnackbarService = inject(SnackbarService);
     @ViewChild('sendListComponent', {static: false}) sendListComponent: SendListComponent | undefined;
     @ViewChild('pendingListComponent', {static: false}) pendingListComponent: PendingListComponent | undefined;
     @ViewChild('friendsListComponent', {static: false}) friendsListComponent: FriendsListComponent | undefined;
@@ -49,7 +49,7 @@ export class FriendsPageComponent implements OnInit {
                 if (res.isSuccess) {
                     this.user = res.data;
                 } else {
-                    this.toastService.showError({title: '失敗', text: res.message})
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {
@@ -64,7 +64,7 @@ export class FriendsPageComponent implements OnInit {
                 if (res.isSuccess) {
                     this.friendsList = res.data ? res.data : [];
                 } else {
-                    this.toastService.showError({title: '失敗', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {
@@ -79,7 +79,7 @@ export class FriendsPageComponent implements OnInit {
                 if (res.isSuccess) {
                     this.sendList = res.data ? res.data : [];
                 } else {
-                    this.toastService.showError({title: '失敗', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {
@@ -94,7 +94,7 @@ export class FriendsPageComponent implements OnInit {
                 if (res.isSuccess) {
                     this.pendingList = res.data ? res.data : [];
                 } else {
-                    this.toastService.showError({title: '失敗', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {
@@ -109,7 +109,7 @@ export class FriendsPageComponent implements OnInit {
                 if (res.isSuccess) {
                     this.groupList = res.data ? res.data : [];
                 } else {
-                    this.toastService.showError({title: '失敗', text: res.message});
+                    this.snackbarService.open(res.message,'ok',this.snackbarService.snackbarErrorConfig);
                 }
             },
             error: err => {

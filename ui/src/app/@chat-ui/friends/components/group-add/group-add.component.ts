@@ -7,7 +7,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {AddFriendRes} from "../../defitiions/friends-defition";
 import {ChatRoomService} from "../../../../shared/services/chat-room.service";
 import {first} from "rxjs";
-import {ToastService} from "../../../../shared/services/toast.service";
+import {SnackbarService} from "../../../../shared/services/snackbar.service";
 
 @Component({
     selector: 'app-group-add',
@@ -16,7 +16,7 @@ import {ToastService} from "../../../../shared/services/toast.service";
 })
 export class GroupAddComponent implements OnInit {
     private chatRoomService: ChatRoomService = inject(ChatRoomService);
-    private toastService: ToastService = inject(ToastService);
+    private snackbarService: SnackbarService = inject(SnackbarService);
     private dialogRef: MatDialogRef<GroupAddComponent> = inject(MatDialogRef);
     public separatorKeysCodes: number[] = [ENTER, COMMA];
     public form: FormGroup | undefined;
@@ -115,7 +115,7 @@ export class GroupAddComponent implements OnInit {
         this.chatRoomService.createChatRoom(this.form?.value).pipe(first()).subscribe({
             next: res=> {
                 if (res.isSuccess) {
-                    this.toastService.showSuccess({title: "成功", text: "建立成功"});
+                    this.snackbarService.open('建立成功', '',this.snackbarService.snackbarSuccessConfig);
                     this.dialogRef.close({refresh: true});
                 };
             },
