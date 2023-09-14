@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import {SettingService} from "../../services/setting.service";
 import {User} from "../../../../shared/definitions/shared.definitions";
-import {SnackbarService} from "../../../../shared/services/snackbar.service";
+
 
 @Component({
     selector: 'app-settings-profile',
