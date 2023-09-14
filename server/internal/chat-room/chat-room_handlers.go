@@ -25,15 +25,6 @@ func NewHandler(s appDefinitions.ChatRoomService) *Handler {
 }
 
 func (h *Handler) GetChatRoom(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := appDefinitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
 	chatRoomId := ctx.Params().Get("chatRoomId")
 	userId := ctx.URLParam("userId")
 	chatRoom, err := h.ChatRoomService.GetChatRoom(ctx, chatRoomId, userId)
@@ -42,7 +33,7 @@ func (h *Handler) GetChatRoom(ctx iris.Context) {
 		res := appDefinitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 	}
 	ctx.StatusCode(http.StatusOK)
 	res := appDefinitions.DefaultRes{
@@ -50,20 +41,10 @@ func (h *Handler) GetChatRoom(ctx iris.Context) {
 		Message:   "成功",
 		Data:      chatRoom,
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func (h *Handler) GetChatRooms(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := appDefinitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	userId := ctx.URLParam("userId")
 	list, err := h.ChatRoomService.GetChatRooms(ctx, userId)
 	if err != nil {
@@ -71,7 +52,7 @@ func (h *Handler) GetChatRooms(ctx iris.Context) {
 		res := appDefinitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	ctx.StatusCode(http.StatusOK)
@@ -80,20 +61,10 @@ func (h *Handler) GetChatRooms(ctx iris.Context) {
 		Message:   "成功",
 		Data:      list,
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func (h *Handler) GetChatRoomMessage(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := appDefinitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	chatRoomId := ctx.Params().Get("chatRoomId")
 	list, err := h.ChatRoomService.GetChatRoomMessage(ctx, chatRoomId)
 	if err != nil {
@@ -101,7 +72,7 @@ func (h *Handler) GetChatRoomMessage(ctx iris.Context) {
 		res := appDefinitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	ctx.StatusCode(http.StatusOK)
@@ -110,28 +81,18 @@ func (h *Handler) GetChatRoomMessage(ctx iris.Context) {
 		Message:   "成功",
 		Data:      list,
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func (h *Handler) CreateChatRoom(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := appDefinitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	var createChatRoomReq appDefinitions.CreateChatRoomReq
-	err = ctx.ReadJSON(&createChatRoomReq)
+	err := ctx.ReadJSON(&createChatRoomReq)
 	if err != nil {
 		ctx.StatusCode(http.StatusBadRequest)
 		res := appDefinitions.DefaultRes{
 			Message: "Field error",
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	chatRoomId, err := h.ChatRoomService.CreateChatRoom(ctx, &createChatRoomReq)
@@ -140,7 +101,7 @@ func (h *Handler) CreateChatRoom(ctx iris.Context) {
 		res := appDefinitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	AppendChatRoom(chatRoomId, createChatRoomReq.MembersID)
@@ -149,7 +110,7 @@ func (h *Handler) CreateChatRoom(ctx iris.Context) {
 		IsSuccess: true,
 		Message:   "成功",
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func AppendChatRoom(chatRoomId string, members []string) {
@@ -176,16 +137,6 @@ func AppendChatRoom(chatRoomId string, members []string) {
 }
 
 func (h *Handler) UseUserIdFriendIdGetChatRoom(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := appDefinitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	userId := ctx.Params().Get("userId")
 	friendId := ctx.Params().Get("friendId")
 	chatRoom, err := h.ChatRoomService.UseUserIdFriendIdGetChatRoom(ctx, userId, friendId)
@@ -194,7 +145,7 @@ func (h *Handler) UseUserIdFriendIdGetChatRoom(ctx iris.Context) {
 		res := appDefinitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	ctx.StatusCode(http.StatusOK)
@@ -203,7 +154,7 @@ func (h *Handler) UseUserIdFriendIdGetChatRoom(ctx iris.Context) {
 		Message:   "成功",
 		Data:      chatRoom,
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 var upgrader = websocket.Upgrader{
@@ -221,7 +172,7 @@ func (h *Handler) ConnectWs(ctx iris.Context) {
 		res := appDefinitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	clientID := ctx.URLParam("userId")
@@ -278,7 +229,7 @@ func (h *Handler) getUserChatRoomsId(ctx iris.Context, userId string) []string {
 		res := appDefinitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 	}
 
 	list, err := h.ChatRoomService.UseUserIdGetChatRoomsId(ctx, userId)
