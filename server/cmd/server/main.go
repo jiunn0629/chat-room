@@ -4,14 +4,14 @@ import (
 	"chat-server/db/sqlite"
 	"chat-server/internal/app"
 	"chat-server/internal/auth"
-	chat_room "chat-server/internal/chat-room"
+	chatroom "chat-server/internal/chat-room"
 	"chat-server/internal/user"
 	"chat-server/router"
 	"log"
 )
 
 func main() {
-	app := app.NewApp()
+	irisApp := app.NewApp()
 	//dbConn, err := postgres.NewDatabase()
 	dbConn, err := sqlite.NewDatabase()
 	if err != nil {
@@ -23,14 +23,17 @@ func main() {
 	userRepo := user.NewRepository(dbConn.GetDB())
 	userSvc := user.NewService(userRepo)
 	userHandler := user.NewHandler(userSvc)
-	chatRoomRepo := chat_room.NewRepository(dbConn.GetDB())
-	chatRoomSvc := chat_room.NewService(chatRoomRepo)
-	chatRoomHandler := chat_room.NewHandler(chatRoomSvc)
+	chatRoomRepo := chatroom.NewRepository(dbConn.GetDB())
+	chatRoomSvc := chatroom.NewService(chatRoomRepo)
+	chatRoomHandler := chatroom.NewHandler(chatRoomSvc)
 
 	//hub := ws.NewHub()
 	//wsHandler := ws.NewHandler(hub)
 	//go hub.Run()
 
-	router.InitRouter(app, authHandler, userHandler, chatRoomHandler)
-	app.Listen(":8080")
+	router.InitRouter(irisApp, authHandler, userHandler, chatRoomHandler)
+	err = irisApp.Listen(":8080")
+	if err != nil {
+		return
+	}
 }
