@@ -1,0 +1,9 @@
+<div class="flex-lg-column my-auto side-menu justify-content-center">
+    <ul class="nav side-menu-nav justify-content-center">
+        <li *ngFor="let item of menuItems" class="nav-item">
+            <a class="nav-link" [routerLink]="item.link" routerLinkActive="active" [matTooltip]="item.title" matTooltipPosition="right">
+                <mat-icon class="">{{item.icon}}</mat-icon>
+            </a>
+        </li>
+    </ul>
+</div>

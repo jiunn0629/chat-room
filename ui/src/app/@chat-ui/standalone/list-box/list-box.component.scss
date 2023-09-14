@@ -1,0 +1,29 @@
+@import "../../../../varible";
+
+.list-box {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 1rem;
+}
+
+.list-box:hover {
+  cursor: pointer;
+  background-color: #bfbfbf50;
+}
+
+.text-wrapper {
+  .name, .status, .message {
+    margin: 0;
+  }
+
+  .status, .message {
+    color: grey;
+  }
+}
+
+.selected {
+  background-color: #bfbfbf50;
+}

@@ -1,0 +1,24 @@
+<div class="friend-top">
+    <div class="px-4 pt-4 d-flex justify-content-between">
+        <h3>朋友</h3>
+        <div class="d-flex align-self-center">
+            <mat-icon class="mx-2" style="transform: scaleX(-1)" matTooltip="添加好友" matTooltipPosition="above" (click)="onOpenAddFriendDialog()">person_add</mat-icon>
+            <mat-icon class="mx-2" matTooltip="新增群組" matTooltipPosition="above" (click)="onOpenAddGroupDialog()">group_add</mat-icon>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-3 mb-2 search-wrapper">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-85">
+            <input matInput type="text" placeholder="以名字搜尋">
+            <mat-icon matIconPrefix>search</mat-icon>
+        </mat-form-field>
+    </div>
+    <app-list-box [user]="user"></app-list-box>
+</div>
+<div class="friend-bottom">
+    <mat-accordion multi="true" displayMode="flat">
+        <app-send-list [sendList]="sendList"></app-send-list>
+        <app-pending-list [pendingList]="pendingList" (refresh)="onRefresh()"></app-pending-list>
+        <app-groups-list [groupList]="groupList"></app-groups-list>
+        <app-friends-list [friendsList]="friendsList"></app-friends-list>
+    </mat-accordion>
+</div>

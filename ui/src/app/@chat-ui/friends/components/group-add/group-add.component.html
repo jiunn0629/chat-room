@@ -1,0 +1,77 @@
+<div class="container-fluid h-100">
+    <div mat-dialog-title class="dialog-title my-3">
+        <h4 class="align-self-center">建立群組</h4>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content class="pb-0">
+        <div class="form-wrapper">
+            <ng-container *ngIf="form">
+                <form [formGroup]="form">
+                    <div class="photo-upload">
+                        <label for="photoInput" class="photo-upload-label">
+                            <div class="photo-upload-icon" *ngIf="!selectedImg">
+                                <mat-icon class="">add_a_photo</mat-icon>
+                            </div>
+                            <span class="photo-text">群組照片</span>
+                            <img *ngIf="selectedImg" [src]="selectedImg">
+                            <input type="file" id="photoInput" class="photo-input"
+                                   (change)="onSelectGroupPhoto($event)">
+                            <mat-error
+                                    *ngIf="form.controls['photo'].hasError('required') && form.controls['photo'].touched"
+                                    class="photo-error">This field is required
+                            </mat-error>
+                        </label>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <mat-label>名稱</mat-label>
+                        <mat-form-field class="mt-2">
+                            <input type="text" matInput appearance="outline" placeholder="輸入群組名稱"
+                                   formControlName="name">
+                            <mat-error *ngIf="form.controls['name'].hasError('required')">This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex flex-column mt-2">
+                        <mat-label>群組成員</mat-label>
+                        <mat-form-field class="mt-2" subscriptSizing="dynamic">
+                            <mat-chip-grid #chipGrid>
+                                <mat-chip-row class="chip" *ngFor="let member of members" (removed)="onRemove(member)">
+                                    <img matChipAvatar *ngIf="member.photo" [src]="member.photo">
+                                    <app-profile-photo-name *ngIf="!member.photo" [name]="member.username"
+                                                            [photoWH]="{width: 25, height: 25, fontSize: 9}"
+                                                            [ngStyle]="{display: 'inline-block', marginRight: '0.25rem'}"></app-profile-photo-name>
+                                    {{member.username}}
+                                    <button matChipRemove>
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip-row>
+                            </mat-chip-grid>
+                            <input appearance="outline" matInput #memberInput placeholder="選擇群組成員"
+                                   [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                   (matChipInputTokenEnd)="onAdd($event)"/>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect($event)">
+                                <mat-option *ngFor="let friend of friendsList" [value]="friend">
+                                    <img matChipAvatar *ngIf="friend.photo" [src]="friend.photo" height="25">
+                                    <app-profile-photo-name *ngIf="!friend.photo" [name]="friend.username"
+                                                            [photoWH]="{width: 25, height: 25, fontSize: 9}"
+                                                            [ngStyle]="{display: 'inline-block', marginRight: '0.25rem'}"></app-profile-photo-name>
+                                    {{friend.username}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-error *ngIf="form.controls['membersId'].hasError('required')  && form.controls['membersId'].touched">This field is required
+                        </mat-error>
+                    </div>
+                </form>
+            </ng-container>
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button type="button" mat-raised-button mat-dialog-close color="accent">取消</button>
+        <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">送出</button>
+    </mat-dialog-actions>
+</div>

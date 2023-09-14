@@ -1,0 +1,44 @@
+<ng-container *ngIf="user">
+    <div class="list-box" (click)="clickEvent.emit(user)">
+        <div class="img-wrapper me-3">
+            <img *ngIf="user.photo" [src]="'data:image/png;base64,' + user.photo" width="50" height="50" class="rounded-circle img-thumbnail">
+            <app-profile-photo-name *ngIf="!user.photo" [name]="user.username" [photoWH]="{width:50,height:50,fontSize:18}"></app-profile-photo-name>
+        </div>
+        <div class="text-wrapper">
+            <strong class="name">{{user.username}}</strong>
+            <p class="status">{{user.status}}</p>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="group">
+    <div class="list-box" (click)="clickEvent.emit(group)">
+        <div class="img-wrapper me-3">
+            <img *ngIf="group.photo" [src]="group.photo" width="50" height="50" class="rounded-circle">
+            <app-profile-photo-name *ngIf="!group.photo" [name]="group.name" [photoWH]="{width:50,height:50,fontSize:18}"></app-profile-photo-name>
+        </div>
+        <div class="text-wrapper">
+            <strong class="name">{{group.name}}</strong>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="chatRoom">
+    <div class="list-box" [ngClass]="selected ? 'selected': ''">
+        <ng-container *ngIf="chatRoom">
+            <div class="img-wrapper me-3">
+                <img *ngIf="chatRoom.photo" [src]="chatRoom.photo"
+                     width="50" height="50" class="rounded-circle img-thumbnail">
+                <app-profile-photo-name *ngIf="!chatRoom.photo" [name]="chatRoom.name"
+                                        [photoWH]="{width:50,height:50,fontSize:18}"></app-profile-photo-name>
+            </div>
+            <div class="text-wrapper">
+                <strong class="name">{{chatRoom.name}}</strong>
+                <ng-container *ngIf="message$ | async as messages">
+                    <p class="message">{{messages[messages.length-1]? messages[messages.length-1].content : ''}}</p>
+                </ng-container>
+
+            </div>
+        </ng-container>
+    </div>
+</ng-container>

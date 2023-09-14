@@ -1,0 +1,101 @@
+.dialogue {
+  width: 100%;
+  height: calc(100vh - 75px);
+  padding: 20px;
+  overflow: auto;
+  flex: 1;
+}
+
+.user {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: flex-start;
+
+  .avatar {
+    width: 60px;
+    text-align: center;
+    flex-shrink: 0;
+
+    .pic {
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .txt {
+    background-color: #aaa;
+    padding: 16px;
+    border-right: 10px;
+    position: relative;
+  }
+}
+
+.remote small {
+  margin-left: 20px;
+}
+
+.remote .txt {
+  margin-left: 20px;
+  margin-right: 80px;
+  border-radius: 0 10px 10px 10px;
+  background-color: #3e92cc;
+  color: #fff;
+}
+
+.local {
+  justify-content: flex-end;
+}
+
+.local small {
+  margin-right: 20px;
+  order: -1;
+}
+
+.local .local-txt {
+  order: -1;
+  text-align: right;
+}
+
+.local .txt {
+  margin-left: 80px;
+  margin-right: 20px;
+  order: -1;
+  border-radius: 10px 0 10px 10px;
+  background-color: #CBFFA9;
+  color: black;
+}
+
+//.remote .txt::before {
+//  border-right: 10px solid #3e92cc;
+//  left: -10px;
+//}
+//
+//.local .txt::before {
+//  border-left: 10px solid #CBFFA9;
+//  right: -10px;
+//}
+//
+//.remote .txt::before,
+//.local .txt::before {
+//  content: '';
+//  position: absolute;
+//  top: 10px;
+//  border-top: 10px solid transparent;
+//  border-bottom: 10px solid transparent;
+//}
+
+.message {
+  height: 75px;
+  padding: 10px;
+  border-top: 1px solid #edf1f7;
+  .message-input {
+    mat-icon{
+      cursor: pointer;
+    }
+  }
+}

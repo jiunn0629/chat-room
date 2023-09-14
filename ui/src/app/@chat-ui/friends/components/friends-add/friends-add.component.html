@@ -1,0 +1,35 @@
+<div class="container-fluid h-100">
+    <div mat-dialog-title class="dialog-title my-3">
+        <h4 class="align-self-center">添加好友</h4>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content class="pb-0">
+        <div class="form-wrapper">
+            <ng-container *ngIf="form">
+                <form [formGroup]="form">
+                    <div class="d-flex flex-column">
+                        <mat-label>Email</mat-label>
+                        <mat-form-field class="mt-2">
+                            <input type="text" matInput appearance="outline" placeholder="輸入Email" formControlName="email">
+                            <mat-error *ngIf="form.controls['email'].hasError('email')">This field need email</mat-error>
+                            <mat-error *ngIf="form.controls['email'].hasError('required')">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex flex-column mt-2">
+                        <mat-label>邀請訊息</mat-label>
+                        <mat-form-field class="mt-2">
+                            <textarea type="text" matInput appearance="outline" placeholder="輸入訊息" formControlName="invitationMessage"></textarea>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </ng-container>
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button type="button" mat-raised-button mat-dialog-close color="accent">取消</button>
+        <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">送出</button>
+    </mat-dialog-actions>
+</div>

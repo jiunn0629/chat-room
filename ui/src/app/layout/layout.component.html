@@ -1,0 +1,11 @@
+<div class="d-lg-flex">
+    <div class="menu flex-lg-column me-lg-1">
+        <ng-content select="app-menu"></ng-content>
+    </div>
+    <div class="left-sidebar me-lg-1">
+        <ng-content select="router-outlet"></ng-content>
+    </div>
+    <div class="chat-room w-100">
+        <ng-content select="app-chat-room-page"></ng-content>
+    </div>
+</div>

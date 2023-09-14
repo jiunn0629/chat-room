@@ -1,0 +1,73 @@
+@import "../../../varible";
+
+.side-menu{
+  min-width: 75px;
+  max-width: 75px;
+  height: 100vh;
+  min-height: 570px;
+  background-color: #ffffff;
+  display: flex;
+  z-index: 9;
+  box-shadow: 0 2px 4px rgba(15,34,58,.12);
+
+  @media (max-width: 991.98px) {
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    min-width: 100%;
+    min-height: auto;
+    display: block;
+    border-top: 1px solid #f0eff5;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.side-menu-nav{
+  list-style-type: none;
+  .nav-item{
+    margin: 7px 0;
+    @media (max-width: 991.98px) {
+      flex-basis: 0;
+      flex-grow: 1;
+      margin: 5px 0;
+    }
+    .nav-link{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: $custom-primary;
+      width: 56px;
+      height: 56px;
+      line-height: 56px;
+      margin: 0px auto;
+      border-radius: 8px;
+      padding: 0;
+
+      @media (max-width: 991.98px) {
+        font-size: 20px;
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+      }
+
+      &.active{
+        background-color: $custom-menu-nav-background;
+        color: $custom-primary;
+      }
+    }
+
+    &.show>.nav-link{
+      background-color: $custom-menu-nav-background;
+      color: $custom-primary;
+    }
+  }
+
+}

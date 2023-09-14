@@ -1,0 +1,56 @@
+.dialog-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialog-title:before {
+  content: none;
+}
+
+.container-fluid {
+  .photo-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+
+    .photo-error {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 1rem 0 1rem 0;
+    }
+
+    &-label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px dashed #ccc;
+      cursor: pointer;
+    }
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+    input {
+      display: none; /* Hide the original file input */
+    }
+
+    &-icon {
+      font-size: 36px;
+    }
+
+    .photo-text {
+      position: absolute;
+      bottom: 10px; /* Adjust the vertical position of the text */
+      font-size: 14px;
+      color: #333;
+    }
+  }
+}

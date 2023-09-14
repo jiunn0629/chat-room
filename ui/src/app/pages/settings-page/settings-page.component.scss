@@ -1,0 +1,12 @@
+.user-profile-bottom{
+  height: calc(100vh - 275px);
+}
+@media (max-width: 991.98px) {
+  .user-profile-bottom {
+    height: calc(100vh - 324px);
+  }
+}
+.custom-accordion {
+  background: transparent;
+  box-shadow: none;
+}

@@ -1,0 +1,12 @@
+.w-85 {
+  width: 85% !important;
+}
+
+.chat-room-top {
+  height: 150px;
+}
+
+.chat-room-bottom {
+  max-height: calc(100vh - 150px);
+  overflow-y: scroll;
+}

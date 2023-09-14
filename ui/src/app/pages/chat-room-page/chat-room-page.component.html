@@ -1,0 +1,4 @@
+<app-chat-room-mgt *ngIf="isOpen$ | async; else welcome" [chatRoom]="chatRoom"></app-chat-room-mgt>
+<ng-template #welcome>
+    <app-chat-room-welcome-mgt></app-chat-room-welcome-mgt>
+</ng-template>

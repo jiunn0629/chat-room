@@ -1,0 +1,19 @@
+<mat-card class="profile-card">
+    <img *ngIf="data.user.photo" [src]="'data:image/png;base64,' + data.user.photo" class="profile-image">
+    <app-profile-photo-name *ngIf="!data.user.photo" [name]="data.user.username" [photoWH]="{width: 150,
+                            height: 150,fontSize: 72}" class="profile-image"></app-profile-photo-name>
+    <mat-card-content class="profile-content">
+        <mat-card-title>{{ data.user.username }}</mat-card-title>
+        <mat-card-subtitle>{{ data.user.status }}</mat-card-subtitle>
+        <p>Email: {{ data.user.email }}</p>
+        <p>邀請訊息: {{data.user.invitationMessage}}</p>
+    </mat-card-content>
+    <mat-dialog-actions align="center">
+        <button type="button" mat-raised-button mat-dialog-close color="accent"
+                (click)="onModifyFriendStatus(data.user, 'refuse')">拒絕
+        </button>
+        <button type="submit" mat-raised-button color="primary" (click)="onModifyFriendStatus(data.user, 'confirm')">
+            確認
+        </button>
+    </mat-dialog-actions>
+</mat-card>

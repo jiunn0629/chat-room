@@ -1,0 +1,20 @@
+<mat-expansion-panel class="custom-accordion">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            群組
+        </mat-panel-title>
+        <mat-panel-description>
+            {{groupList.length}}
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-container *ngFor="let group of groupList; let i = index">
+        <app-list-box [group]="group" [matMenuTriggerFor]="action" [matMenuTriggerData]="{data:group}"></app-list-box>
+    </ng-container>
+</mat-expansion-panel>
+
+<mat-menu #action="matMenu" xPosition="after">
+    <ng-template matMenuContent let-group="data">
+        <button mat-menu-item (click)="onNavigateToChat(group)">聊天</button>
+        <button mat-menu-item>刪除</button>
+    </ng-template>
+</mat-menu>

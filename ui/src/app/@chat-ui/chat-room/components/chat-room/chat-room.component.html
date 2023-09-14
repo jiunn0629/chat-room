@@ -1,0 +1,35 @@
+<div class="chat-room">
+    <ng-container *ngIf="message$ | async">
+        <div #dialogue class="dialogue">
+            <ng-container *ngFor="let message of message$ | async;">
+                <div class="user" [ngClass]="message.senderId === userID ? 'local' : 'remote'" [@fadeInOut]>
+                    <div class="avatar" *ngIf="message.senderId !== userID">
+                        <div class="pic" *ngIf="membersMap.get(message.senderId)?.photo">
+                            <img>
+                        </div>
+                        <app-profile-photo-name
+                                *ngIf="!membersMap.get(message.senderId)?.photo"
+                                [name]="membersMap.get(message.senderId)?.name"
+                                [photoWH]="{width: 50,height:50,fontSize:18}"></app-profile-photo-name>
+                    </div>
+                    <div [ngClass]="message.senderId === userID ? 'local-txt' : ''">
+                        <small class="text-secondary">{{message.timestamp * 1000 | date: 'hh:mm'}}</small>
+                        <div class="txt">
+                            {{message.content}}
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="message">
+            <mat-form-field class="w-100 message-input" subscriptSizing="dynamic">
+                <input type="text" #message matInput placeholder="type something..."
+                       (compositionstart)="isComposing = true; shouldSend = false"
+                       (compositionupdate)="isComposing = true; shouldSend = false"
+                       (compositionend)="isComposing = false"
+                       (keyup.enter)="shouldSend ? onSendMessage(message.value) : shouldSend = true">
+                <mat-icon matSuffix (click)="onSendMessage(message.value)">send</mat-icon>
+            </mat-form-field>
+        </div>
+    </ng-container>
+</div>

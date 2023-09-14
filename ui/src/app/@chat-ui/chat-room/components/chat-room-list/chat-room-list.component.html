@@ -1,0 +1,9 @@
+<ng-container *ngFor="let chatRoom of chatRoomService.chatRoomList$ | async | orderBy: 'lastModify';">
+    <app-list-box *ngIf="chatRoom.lastModify || chatRoom === chatRoomService.chatRoom$.getValue()"
+                  [chatRoom]="chatRoom"
+                  [selected]="chatRoom === chatRoomService.chatRoom$.getValue()"
+                  [message$]="chatRoomService.chatRoomMessageMap.get(chatRoom.id)"
+                  (click)="onSelectChatRoom(chatRoom)"></app-list-box>
+
+    <app-skeleton-loader *ngIf="!chatRoomService.chatRoomMessageMap.get(chatRoom.id)"></app-skeleton-loader>
+</ng-container>

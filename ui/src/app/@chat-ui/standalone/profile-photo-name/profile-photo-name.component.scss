@@ -1,0 +1,13 @@
+.profile-photo{
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  background: gray;
+  .profile-name{
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    line-height: 100px;
+  }
+}

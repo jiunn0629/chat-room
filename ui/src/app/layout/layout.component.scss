@@ -1,0 +1,51 @@
+@import "../../varible.scss";
+
+.menu {
+  min-width: 75px;
+  max-width: 75px;
+  height: 100vh;
+  min-height: 570px;
+  background-color: #ffffff;
+  display: flex;
+  z-index: 9;
+  box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
+}
+
+.left-sidebar {
+  height: 100vh;
+  background-color: $custom-background-color;
+}
+
+.chat-room {
+  box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
+  transition: all 0.4s;
+}
+
+@media (min-width: 992px) {
+  .left-sidebar {
+    min-width: 380px;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 992px) {
+  .menu {
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    min-width: 100%;
+    min-height: auto;
+    display: block;
+    border-top: 1px solid #f0eff5;
+  }
+  .chat-room {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    transform: translateX(100%);
+    z-index: 99;
+  }
+}

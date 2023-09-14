@@ -1,0 +1,20 @@
+<mat-expansion-panel class="custom-accordion">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            好友
+        </mat-panel-title>
+        <mat-panel-description>
+            {{friendsList.length}}
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-container *ngFor="let user of friendsList; let i = index;">
+        <app-list-box [user]="user" [matMenuTriggerFor]="action" [matMenuTriggerData]="{data:user}"></app-list-box>
+    </ng-container>
+</mat-expansion-panel>
+
+<mat-menu #action="matMenu">
+    <ng-template matMenuContent let-user="data">
+        <button mat-menu-item (click)="onGetChatRoomByUserIdFriendId(user)">聊天</button>
+        <button mat-menu-item>刪除</button>
+    </ng-template>
+</mat-menu>

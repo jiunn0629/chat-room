@@ -1,0 +1,38 @@
+<div class="text-center mt-5 mb-4">
+    <h4>Sign up</h4>
+</div>
+<mat-card class="p-3">
+    <mat-card-content>
+        <form *ngIf="form" [formGroup]="form" class="text-center">
+            <mat-form-field appearance="outline" class="w-75 my-3">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" formControlName="userName">
+                <mat-error *ngIf="form.controls['userName'].hasError('required')">This field is required</mat-error>
+                <mat-icon matIconPrefix>account_circle</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-75 mb-3">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+                <mat-error *ngIf="form.controls['email'].hasError('email')">This field need email</mat-error>
+                <mat-error *ngIf="form.controls['email'].hasError('required')">This field is required</mat-error>
+                <mat-icon matIconPrefix>mail</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-75 mb-3">
+                <mat-label>Password</mat-label>
+                <input #passwordInput matInput type="password" formControlName="password">
+                <mat-error *ngIf="form.controls['password'].hasError('required')">This field is required</mat-error>
+                <mat-icon matIconPrefix>lock</mat-icon>
+                <mat-icon matIconSuffix (click)="onToggleSeePassword()">visibility</mat-icon>
+            </mat-form-field>
+            <div class="mb-3">
+                <button mat-raised-button color="primary" class="w-75" (click)="onRegister()">Sign up</button>
+            </div>
+            <div>
+                <p class="text-muted">By registering your to the <a class="text-primary">Terms of use</a></p>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+<div class="text-center mt-3">
+    <p class="text-muted">Already have an account ? <a class="text-primary" routerLink="../login">Sign in</a></p>
+</div>

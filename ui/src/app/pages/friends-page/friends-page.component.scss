@@ -1,0 +1,22 @@
+@import "../../../varible";
+.action-wrapper {
+  mat-icon {
+    cursor: pointer;
+  }
+  mat-icon:hover {
+    color: $custom-primary
+  }
+}
+.friend-top{
+  max-height: 230px;
+  mat-icon {
+    font-size: 30px; width: 30px; height: 30px;
+  }
+}
+.friend-bottom{
+  max-height: calc(100vh - 230px);
+  overflow-y: scroll;
+}
+.w-85 {
+  width: 85% !important;
+}

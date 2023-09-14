@@ -1,0 +1,13 @@
+<mat-expansion-panel class="custom-accordion">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            待接受
+        </mat-panel-title>
+        <mat-panel-description>
+            {{pendingList.length}}
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-container *ngFor="let user of pendingList; let i = index">
+        <app-list-box [user]="user" (clickEvent)="onOpenConfirmFriendDialog(user)"></app-list-box>
+    </ng-container>
+</mat-expansion-panel>
