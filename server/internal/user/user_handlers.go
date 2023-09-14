@@ -3,7 +3,6 @@ package user
 import (
 	"bytes"
 	"chat-server/definitions"
-	"chat-server/util"
 	"fmt"
 	"github.com/kataras/iris/v12"
 	"image"
@@ -22,15 +21,6 @@ func NewHandler(s definitions.UserService) *Handler {
 }
 
 func (h *Handler) GetUser(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := definitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
 	userId := ctx.Params().Get("userId")
 	user, err := h.UserService.GetUser(ctx, userId)
 	if err != nil {
@@ -38,7 +28,7 @@ func (h *Handler) GetUser(ctx iris.Context) {
 		res := definitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	ctx.StatusCode(http.StatusOK)
@@ -47,7 +37,7 @@ func (h *Handler) GetUser(ctx iris.Context) {
 		Message:   "成功",
 		Data:      user,
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func (h *Handler) CreateUser(ctx iris.Context) {
@@ -155,18 +145,7 @@ func (h *Handler) UpdateUser(ctx iris.Context) {
 }
 
 func (h *Handler) SaveUserPhoto(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := definitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	photo, info, err := ctx.FormFile("photo")
-
 	if err != nil {
 		ctx.StatusCode(http.StatusBadRequest)
 		res := definitions.DefaultRes{
@@ -205,16 +184,6 @@ func (h *Handler) SaveUserPhoto(ctx iris.Context) {
 }
 
 func (h *Handler) GetUserPhoto(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := definitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	userId := ctx.Params().Get("userId")
 	photo, err := h.UserService.GetUserPhoto(ctx, userId)
 	if err != nil {
@@ -230,14 +199,14 @@ func (h *Handler) GetUserPhoto(ctx iris.Context) {
 	}
 	if photo == nil {
 		ctx.StatusCode(http.StatusNotFound)
-		ctx.WriteString("Image not found")
+		_, _ = ctx.WriteString("Image not found")
 		return
 	}
 
 	img, _, err := image.Decode(bytes.NewReader(photo))
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
-		ctx.WriteString("Failed to decode image")
+		_, _ = ctx.WriteString("Failed to decode image")
 		return
 	}
 
@@ -245,25 +214,15 @@ func (h *Handler) GetUserPhoto(ctx iris.Context) {
 	err = png.Encode(buf, img)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
-		ctx.WriteString("Failed to encode image")
+		_, _ = ctx.WriteString("Failed to encode image")
 		return
 	}
 
 	ctx.ContentType("image/png")
-	ctx.Write(buf.Bytes())
+	_, _ = ctx.Write(buf.Bytes())
 }
 
 func (h *Handler) GetFriends(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := definitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	userId := ctx.Params().Get("userId")
 	invitationStatus := ctx.URLParam("invitationStatus")
 	list, err := h.UserService.GetFriends(ctx, userId, invitationStatus)
@@ -272,7 +231,7 @@ func (h *Handler) GetFriends(ctx iris.Context) {
 		res := definitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	ctx.StatusCode(http.StatusOK)
@@ -281,7 +240,7 @@ func (h *Handler) GetFriends(ctx iris.Context) {
 		Message:   "成功",
 		Data:      list,
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func (h *Handler) GetGroup(ctx iris.Context) {
@@ -292,7 +251,7 @@ func (h *Handler) GetGroup(ctx iris.Context) {
 		res := definitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	ctx.StatusCode(http.StatusOK)
@@ -301,20 +260,10 @@ func (h *Handler) GetGroup(ctx iris.Context) {
 		Message:   "成功",
 		Data:      list,
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func (h *Handler) AddFriend(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := definitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	userId := ctx.Params().Get("userId")
 	var addFriendReq definitions.AddFriendReq
 
@@ -376,26 +325,16 @@ func (h *Handler) AddFriend(ctx iris.Context) {
 }
 
 func (h *Handler) ModifyFriendStatus(ctx iris.Context) {
-	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := definitions.DefaultRes{
-			Message: err.Error(),
-		}
-		ctx.JSON(res)
-	}
-
 	userId := ctx.Params().Get("userId")
 	friendId := ctx.Params().Get("friendId")
 	invitationStatus := ctx.URLParam("invitationStatus")
-	err = h.UserService.ModifyFriendStatus(ctx, userId, friendId, invitationStatus)
+	err := h.UserService.ModifyFriendStatus(ctx, userId, friendId, invitationStatus)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
 		res := definitions.DefaultRes{
 			Message: err.Error(),
 		}
-		ctx.JSON(res)
+		_ = ctx.JSON(res)
 		return
 	}
 	ctx.StatusCode(http.StatusOK)
@@ -403,7 +342,7 @@ func (h *Handler) ModifyFriendStatus(ctx iris.Context) {
 		IsSuccess: true,
 		Message:   "成功",
 	}
-	ctx.JSON(res)
+	_ = ctx.JSON(res)
 }
 
 func (h *Handler) DeleteFriend(ctx iris.Context) {

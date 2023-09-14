@@ -2,7 +2,7 @@ package router
 
 import (
 	"chat-server/internal/auth"
-	chat_room "chat-server/internal/chat-room"
+	chatroom "chat-server/internal/chat-room"
 	"chat-server/internal/user"
 	"github.com/kataras/iris/v12"
 )
@@ -10,7 +10,7 @@ import (
 func InitRouter(app *iris.Application,
 	authHandler *auth.Handler,
 	userHandler *user.Handler,
-	chatRoomHandler *chat_room.Handler,
+	chatRoomHandler *chatroom.Handler,
 ) {
 
 	authRoute := app.Party("/auth")
@@ -38,7 +38,7 @@ func InitRouter(app *iris.Application,
 		chatRoomRoute.Get("/{chatRoomId}/message", RequireLogin, chatRoomHandler.GetChatRoomMessage)
 		chatRoomRoute.Post("", RequireLogin, chatRoomHandler.CreateChatRoom)
 		chatRoomRoute.Get("/user/{userId}/friend/{friendId}", RequireLogin, chatRoomHandler.UseUserIdFriendIdGetChatRoom)
-		chatRoomRoute.Get("/ws", RequireLogin, chatRoomHandler.ConnectWs)
+		chatRoomRoute.Get("/ws", chatRoomHandler.ConnectWs)
 	}
 
 }
