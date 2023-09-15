@@ -14,7 +14,7 @@ yarn-error.log
 /vendor/
 /Godeps/
 *.out
-
+*.db
 # IDE-specific
 .idea/
 .vscode/
