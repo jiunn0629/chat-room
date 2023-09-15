@@ -44,7 +44,7 @@ export class FriendsPageComponent implements OnInit {
     }
 
     private onGetUser() {
-        this.userService.getUser(localStorage.getItem('userID')!).pipe(first()).subscribe({
+        this.userService.getUser().pipe(first()).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.user = res.data;
@@ -59,7 +59,7 @@ export class FriendsPageComponent implements OnInit {
     }
 
     public onGetFriends() {
-        this.friendsService.getFriends(localStorage.getItem('userID')!, 'confirm').pipe(first()).subscribe({
+        this.friendsService.getFriends('confirm').pipe(first()).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.friendsList = res.data ? res.data : [];
@@ -74,7 +74,7 @@ export class FriendsPageComponent implements OnInit {
     }
 
     public onGetSends() {
-        this.friendsService.getFriends(localStorage.getItem('userID')!, 'send').pipe(first()).subscribe({
+        this.friendsService.getFriends('send').pipe(first()).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.sendList = res.data ? res.data : [];
@@ -89,7 +89,7 @@ export class FriendsPageComponent implements OnInit {
     }
 
     public onGetPending() {
-        this.friendsService.getFriends(localStorage.getItem('userID')!, 'pending').pipe(first()).subscribe({
+        this.friendsService.getFriends('pending').pipe(first()).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.pendingList = res.data ? res.data : [];
@@ -104,7 +104,7 @@ export class FriendsPageComponent implements OnInit {
     }
 
     public onGetGroup() {
-        this.friendsService.getGroup(localStorage.getItem('userID')!).pipe(first()).subscribe({
+        this.friendsService.getGroup().pipe(first()).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.groupList = res.data ? res.data : [];

@@ -12,8 +12,8 @@ export class UserService {
       private http: HttpClient,
   ) { }
 
-  public getUser(userId: string) {
-    const url = this.resourceURLs.getUser.replace('{userId}',userId);
+  public getUser() {
+    const url = this.resourceURLs.getUser;
     return this.http.get<DefaultRes<User>>(url);
   }
 }

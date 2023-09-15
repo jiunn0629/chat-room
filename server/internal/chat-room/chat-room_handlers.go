@@ -26,7 +26,7 @@ func NewHandler(s appDefinitions.ChatRoomService) *Handler {
 
 func (h *Handler) GetChatRoom(ctx iris.Context) {
 	chatRoomId := ctx.Params().Get("chatRoomId")
-	userId := ctx.URLParam("userId")
+	userId := ctx.Values().GetString("userId")
 	chatRoom, err := h.ChatRoomService.GetChatRoom(ctx, chatRoomId, userId)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
@@ -45,7 +45,7 @@ func (h *Handler) GetChatRoom(ctx iris.Context) {
 }
 
 func (h *Handler) GetChatRooms(ctx iris.Context) {
-	userId := ctx.URLParam("userId")
+	userId := ctx.Values().GetString("userId")
 	list, err := h.ChatRoomService.GetChatRooms(ctx, userId)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
@@ -137,7 +137,7 @@ func AppendChatRoom(chatRoomId string, members []string) {
 }
 
 func (h *Handler) UseUserIdFriendIdGetChatRoom(ctx iris.Context) {
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	friendId := ctx.Params().Get("friendId")
 	chatRoom, err := h.ChatRoomService.UseUserIdFriendIdGetChatRoom(ctx, userId, friendId)
 	if err != nil {
@@ -185,7 +185,7 @@ func (h *Handler) ConnectWs(ctx iris.Context) {
 		ID:   clientID,
 		Conn: conn,
 	}
-	list := h.getUserChatRoomsId(ctx, clientID)
+	list := h.getUserChatRoomsId(ctx)
 	for _, chatRoomId := range list {
 		chatRoom, isExist := ChatRooms[chatRoomId]
 		if !isExist {
@@ -221,9 +221,9 @@ func (h *Handler) ConnectWs(ctx iris.Context) {
 //	}
 //}
 
-func (h *Handler) getUserChatRoomsId(ctx iris.Context, userId string) []string {
+func (h *Handler) getUserChatRoomsId(ctx iris.Context) []string {
 	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
+	claims, err := util.ParseToken(token)
 	if err != nil {
 		ctx.StatusCode(http.StatusUnauthorized)
 		res := appDefinitions.DefaultRes{
@@ -232,7 +232,7 @@ func (h *Handler) getUserChatRoomsId(ctx iris.Context, userId string) []string {
 		_ = ctx.JSON(res)
 	}
 
-	list, err := h.ChatRoomService.UseUserIdGetChatRoomsId(ctx, userId)
+	list, err := h.ChatRoomService.UseUserIdGetChatRoomsId(ctx, claims.ID)
 	if err != nil {
 		fmt.Println(err)
 		return nil

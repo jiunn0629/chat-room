@@ -15,7 +15,7 @@ export class FriendsListComponent {
     @Input() friendsList: AddFriendRes[] = [];
 
     public onGetChatRoomByUserIdFriendId(user: AddFriendRes) {
-        this.chatRoomService.getChatRoomByUserIdFriendId(localStorage.getItem('userID')!, user.id).pipe(first()).subscribe({
+        this.chatRoomService.getChatRoomByUserIdFriendId(user.id).pipe(first()).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.chatRoomService.setSelectChatRoomId$(res.data);

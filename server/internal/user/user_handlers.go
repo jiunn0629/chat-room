@@ -21,7 +21,7 @@ func NewHandler(s definitions.UserService) *Handler {
 }
 
 func (h *Handler) GetUser(ctx iris.Context) {
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	user, err := h.UserService.GetUser(ctx, userId)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
@@ -159,7 +159,7 @@ func (h *Handler) SaveUserPhoto(ctx iris.Context) {
 	}
 	defer photo.Close()
 
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	err = h.UserService.SaveUserPhoto(ctx, userId, photo, *info)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
@@ -184,7 +184,7 @@ func (h *Handler) SaveUserPhoto(ctx iris.Context) {
 }
 
 func (h *Handler) GetUserPhoto(ctx iris.Context) {
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	photo, err := h.UserService.GetUserPhoto(ctx, userId)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
@@ -223,7 +223,7 @@ func (h *Handler) GetUserPhoto(ctx iris.Context) {
 }
 
 func (h *Handler) GetFriends(ctx iris.Context) {
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	invitationStatus := ctx.URLParam("invitationStatus")
 	list, err := h.UserService.GetFriends(ctx, userId, invitationStatus)
 	if err != nil {
@@ -244,7 +244,7 @@ func (h *Handler) GetFriends(ctx iris.Context) {
 }
 
 func (h *Handler) GetGroup(ctx iris.Context) {
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	list, err := h.UserService.GetGroup(ctx, userId)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
@@ -264,7 +264,7 @@ func (h *Handler) GetGroup(ctx iris.Context) {
 }
 
 func (h *Handler) AddFriend(ctx iris.Context) {
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	var addFriendReq definitions.AddFriendReq
 
 	if err := ctx.ReadJSON(&addFriendReq); err != nil {
@@ -325,7 +325,7 @@ func (h *Handler) AddFriend(ctx iris.Context) {
 }
 
 func (h *Handler) ModifyFriendStatus(ctx iris.Context) {
-	userId := ctx.Params().Get("userId")
+	userId := ctx.Values().GetString("userId")
 	friendId := ctx.Params().Get("friendId")
 	invitationStatus := ctx.URLParam("invitationStatus")
 	err := h.UserService.ModifyFriendStatus(ctx, userId, friendId, invitationStatus)

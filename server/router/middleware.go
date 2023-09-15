@@ -9,7 +9,7 @@ import (
 
 func RequireLogin(ctx iris.Context) {
 	token := ctx.Values().GetString("token")
-	err := util.ParseToken(token)
+	claims, err := util.ParseToken(token)
 	if err != nil {
 		ctx.StatusCode(http.StatusUnauthorized)
 		res := definitions.DefaultRes{
@@ -18,5 +18,6 @@ func RequireLogin(ctx iris.Context) {
 		_ = ctx.JSON(res)
 		return
 	}
+	ctx.Values().Set("userId", claims.ID)
 	ctx.Next()
 }

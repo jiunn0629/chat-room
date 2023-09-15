@@ -4,23 +4,25 @@ import {RESOURCE_URLS_TOKEN} from "../../../shared/providers/resource-url-provid
 import {DefaultRes} from "../../../shared/definitions/shared.definitions";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SettingService {
-      private resourceURLs = inject(RESOURCE_URLS_TOKEN);
-  constructor(
-      private http: HttpClient,
-  ) { }
+    private resourceURLs = inject(RESOURCE_URLS_TOKEN);
 
-  public getUserPhoto(userId: string) {
-    const url = this.resourceURLs.userPhoto.replace('{userId}', userId);
-    return this.http.get<Blob>(url,{responseType: 'blob' as 'json'});
-  }
+    constructor(
+        private http: HttpClient,
+    ) {
+    }
 
-  public uploadUserPhoto(userId: string, photo: File) {
-    const url = this.resourceURLs.userPhoto.replace('{userId}', userId);
-    const formData = new FormData();
-    formData.append('photo', photo)
-    return this.http.post<DefaultRes<any>>(url, formData);
-  }
+    public getUserPhoto() {
+        const url = this.resourceURLs.userPhoto;
+        return this.http.get<Blob>(url, {responseType: 'blob' as 'json'});
+    }
+
+    public uploadUserPhoto(photo: File) {
+        const url = this.resourceURLs.userPhoto;
+        const formData = new FormData();
+        formData.append('photo', photo)
+        return this.http.post<DefaultRes<any>>(url, formData);
+    }
 }

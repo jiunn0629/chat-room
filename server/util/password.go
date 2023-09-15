@@ -20,7 +20,7 @@ func CheckPassword(password string, hashedPassword string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }
 
-func ParseToken(tokenString string) error {
+func ParseToken(tokenString string) (*definitions.MyJWTClaims, error) {
 
 	token, err := jwt.ParseWithClaims(tokenString, &definitions.MyJWTClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(definitions.SecretKey), nil
@@ -28,16 +28,14 @@ func ParseToken(tokenString string) error {
 
 	if err != nil {
 		fmt.Println("解析token錯誤:", err)
-		return err
+		return nil, err
 	}
 
 	// 检查 token 是否有效
 	if claims, ok := token.Claims.(*definitions.MyJWTClaims); ok && token.Valid {
-		fmt.Println("ID:", claims.ID)
-		fmt.Println("Username:", claims.Username)
-		return nil
+		return claims, nil
 	} else {
 		fmt.Println("無效的token")
-		return fmt.Errorf("無效的token")
+		return nil, fmt.Errorf("無效的token")
 	}
 }

@@ -33,7 +33,7 @@ export class FriendsAddComponent implements OnInit {
     if (this.form?.invalid) {
       return;
     };
-    this.friendsService.addFriend(localStorage.getItem('userID')!, this.form?.value).subscribe({
+    this.friendsService.addFriend(this.form?.value).subscribe({
       next: res => {
         this.snackbarService.open('添加成功，請等候對方回應', 'ok',this.snackbarService.snackbarSuccessConfig);
         this.dialogRef.close({refresh: true});

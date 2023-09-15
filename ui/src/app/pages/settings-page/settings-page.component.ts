@@ -19,7 +19,7 @@ export class SettingsPageComponent implements OnInit {
     }
 
     private onGetUser() {
-        this.userService.getUser(localStorage.getItem('userID')!).pipe(first()).subscribe({
+        this.userService.getUser().pipe(first()).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.user = res.data;

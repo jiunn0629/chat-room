@@ -22,13 +22,13 @@ func InitRouter(app *iris.Application,
 	{
 		userRoute.Post("", userHandler.CreateUser)
 		userRoute.Put("", RequireLogin, userHandler.UpdateUser)
-		userRoute.Get("/{userId}", RequireLogin, userHandler.GetUser)
-		userRoute.Get("/{userId}/photo", RequireLogin, userHandler.GetUserPhoto)
-		userRoute.Post("/{userId}/photo", RequireLogin, userHandler.SaveUserPhoto)
-		userRoute.Post("/{userId}/friend", RequireLogin, userHandler.AddFriend)
-		userRoute.Get("/{userId}/friends", RequireLogin, userHandler.GetFriends)
-		userRoute.Get("/{userId}/groups", RequireLogin, userHandler.GetGroup)
-		userRoute.Put("/{userId}/friends/{friendId}", RequireLogin, userHandler.ModifyFriendStatus)
+		userRoute.Get("", RequireLogin, userHandler.GetUser)
+		userRoute.Get("/photo", RequireLogin, userHandler.GetUserPhoto)
+		userRoute.Post("/photo", RequireLogin, userHandler.SaveUserPhoto)
+		userRoute.Post("/friend", RequireLogin, userHandler.AddFriend)
+		userRoute.Get("/friends", RequireLogin, userHandler.GetFriends)
+		userRoute.Get("/groups", RequireLogin, userHandler.GetGroup)
+		userRoute.Put("/friends/{friendId}", RequireLogin, userHandler.ModifyFriendStatus)
 	}
 
 	chatRoomRoute := app.Party("/chat-room")
@@ -37,7 +37,7 @@ func InitRouter(app *iris.Application,
 		chatRoomRoute.Get("/{chatRoomId}", RequireLogin, chatRoomHandler.GetChatRoom)
 		chatRoomRoute.Get("/{chatRoomId}/message", RequireLogin, chatRoomHandler.GetChatRoomMessage)
 		chatRoomRoute.Post("", RequireLogin, chatRoomHandler.CreateChatRoom)
-		chatRoomRoute.Get("/user/{userId}/friend/{friendId}", RequireLogin, chatRoomHandler.UseUserIdFriendIdGetChatRoom)
+		chatRoomRoute.Get("/user/friend/{friendId}", RequireLogin, chatRoomHandler.UseUserIdFriendIdGetChatRoom)
 		chatRoomRoute.Get("/ws", chatRoomHandler.ConnectWs)
 	}
 

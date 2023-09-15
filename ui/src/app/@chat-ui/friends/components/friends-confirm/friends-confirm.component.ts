@@ -24,7 +24,7 @@ export class FriendsConfirmComponent {
     }
 
     public onModifyFriendStatus(friend: AddFriendRes, invitationStatus: 'confirm' | 'refuse') {
-        this.friendService.modifyFriendStatus(localStorage.getItem('userID')!, friend.id, invitationStatus).pipe(
+        this.friendService.modifyFriendStatus(friend.id, invitationStatus).pipe(
             switchMap(res => {
                 return this.chatRoomService.createChatRoom({
                     type:"private",

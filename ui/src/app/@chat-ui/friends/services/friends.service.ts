@@ -14,29 +14,29 @@ export class FriendsService {
     ) {
     }
 
-    public addFriend(userId: string, data: AddFriendReq) {
-        const url = this.resourceURLs.addFriend.replace('{userId}',userId);
+    public addFriend(data: AddFriendReq) {
+        const url = this.resourceURLs.addFriend;
         return this.http.post<DefaultRes<AddFriendRes>>(url,data);
     }
 
-    public getFriends(userId: string, invitationStatus: string) {
-        const url = this.resourceURLs.getFriends.replace('{userId}',userId);
+    public getFriends(invitationStatus: string) {
+        const url = this.resourceURLs.getFriends;
         const options = {
             params: new HttpParams().set('invitationStatus', invitationStatus)
         }
         return this.http.get<DefaultRes<AddFriendRes[]>>(url, options);
     }
 
-    public modifyFriendStatus(userId: string, friendId: string, invitationStatus: string) {
-        const url = this.resourceURLs.modifyFriendStatus.replace('{userId}',userId).replace('{friendId}',friendId);
+    public modifyFriendStatus(friendId: string, invitationStatus: string) {
+        const url = this.resourceURLs.modifyFriendStatus.replace('{friendId}',friendId);
         const options = {
             params: new HttpParams().set('invitationStatus', invitationStatus)
         }
         return this.http.put<DefaultRes<null>>(url, {},options);
     }
 
-    public getGroup(userId: string) {
-        const url = this.resourceURLs.getGroup.replace('{userId}',userId);
+    public getGroup() {
+        const url = this.resourceURLs.getGroup;
         return this.http.get<DefaultRes<ChatRoom[]>>(url);
     }
 }

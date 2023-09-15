@@ -29,18 +29,18 @@ export const ResourceURLS: ResourceUrls = {
     login: `${baseUrl}/auth/login`,
     register: `${baseUrl}/user`,
     // friends service
-    getUser: `${baseUrl}/user/{userId}`,
-    getFriends: `${baseUrl}/user/{userId}/friends`,
-    modifyFriendStatus: `${baseUrl}/user/{userId}/friends/{friendId}`,
-    getGroup: `${baseUrl}/user/{userId}/groups`,
+    getUser: `${baseUrl}/user`,
+    getFriends: `${baseUrl}/user/friends`,
+    modifyFriendStatus: `${baseUrl}/user/friends/{friendId}`,
+    getGroup: `${baseUrl}/user/groups`,
     // setting service
-    userPhoto: `${baseUrl}/user/{userId}/photo`,
-    addFriend: `${baseUrl}/user/{userId}/friend`,
+    userPhoto: `${baseUrl}/user/photo`,
+    addFriend: `${baseUrl}/user/friend`,
     // chatroom service
     chatRoom: `${baseUrl}/chat-room/{chatRoomId}`,
     chatRooms: `${baseUrl}/chat-room`,
     chatRoomMessage: `${baseUrl}/chat-room/{chatRoomId}/message`,
-    getChatRoomByUserIdFriendId: `${baseUrl}/chat-room/user/{userId}/friend/{friendId}`,
+    getChatRoomByUserIdFriendId: `${baseUrl}/chat-room/user/friend/{friendId}`,
     // ws service
     wsEndPoint: `${wsUrl}/chat-room/ws`,
 }

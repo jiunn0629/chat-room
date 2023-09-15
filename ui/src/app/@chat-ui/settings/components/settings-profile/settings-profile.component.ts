@@ -45,7 +45,7 @@ export class SettingsProfileComponent implements OnInit {
         if (!photo) {
             return;
         }
-        this.settingService.uploadUserPhoto(localStorage.getItem('userID')!, photo).subscribe({
+        this.settingService.uploadUserPhoto(photo).subscribe({
             next: res => {
                 if (res.isSuccess) {
                     this.snackbarService.open(res.message,'',this.snackbarService.snackbarSuccessConfig);

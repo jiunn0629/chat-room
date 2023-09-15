@@ -56,30 +56,21 @@ export class ChatRoomService {
 
     public getChatRoom(chatRoomId: string) {
         const url = this.resourceURLs.chatRoom.replace('{chatRoomId}',chatRoomId);
-        const options = {
-            params: new HttpParams().set('userId', localStorage.getItem('userID')!)
-        };
-        return this.http.get<DefaultRes<ChatRoom>>(url, options);
+        return this.http.get<DefaultRes<ChatRoom>>(url);
     }
 
     public getChatRooms() {
         const url = this.resourceURLs.chatRooms;
-        const options = {
-            params: new HttpParams().set('userId', localStorage.getItem('userID')!)
-        }
-        return this.http.get<DefaultRes<ChatRoom[]>>(url,options);
+        return this.http.get<DefaultRes<ChatRoom[]>>(url);
     }
 
     public getChatRoomMessage(chatRoomId: string) {
         const url = this.resourceURLs.chatRoomMessage.replace('{chatRoomId}', chatRoomId);
-        const options = {
-            params: new HttpParams().set('userId', localStorage.getItem('userID')!)
-        }
-        return this.http.get<DefaultRes<Message[]>>(url,options);
+        return this.http.get<DefaultRes<Message[]>>(url);
     }
 
-    public getChatRoomByUserIdFriendId(userId: string, friendId: string) {
-        const url = this.resourceURLs.getChatRoomByUserIdFriendId.replace('{userId}', userId).replace('{friendId}',friendId);
+    public getChatRoomByUserIdFriendId(friendId: string) {
+        const url = this.resourceURLs.getChatRoomByUserIdFriendId.replace('{friendId}',friendId);
         return this.http.get<DefaultRes<string>>(url);
     }
 
