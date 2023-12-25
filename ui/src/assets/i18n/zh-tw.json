@@ -1,0 +1,24 @@
+{
+  "chat": {
+    "shared": {
+      "button": {
+        "submit": "送出",
+        "cancel": "取消"
+      },
+      "label": {
+
+      },
+      "message": {
+
+      }
+    },
+    "pages": {
+      "login": {
+
+      },
+      "register": {
+
+      }
+    }
+  }
+}

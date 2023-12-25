@@ -7,6 +7,7 @@ import {ChatRoomService} from "./services/chat-room.service";
 import {HttpClientModule} from "@angular/common/http";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import {OrderByPipe} from './pipes/order-by.pipe';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {OrderByPipe} from './pipes/order-by.pipe';
         CommonModule,
         AngularMaterialModule,
         HttpClientModule,
-        NgxSkeletonLoaderModule
+        NgxSkeletonLoaderModule,
+        TranslateModule.forChild()
     ],
     exports: [
         AngularMaterialModule,
