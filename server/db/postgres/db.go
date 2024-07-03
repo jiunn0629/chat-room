@@ -1,4 +1,4 @@
-package postgres
+package db
 
 import (
 	"database/sql"
@@ -10,7 +10,7 @@ type Database struct {
 }
 
 func NewDatabase() (*Database, error) {
-	db, err := sql.Open("postgres", "postgresql://example:example@localhost:5432/chat?sslmode=disable")
+	db, err := sql.Open("postgres", "postgresql://example:example@postgres:5432/chat?sslmode=disable")
 	if err != nil {
 		return nil, err
 	}

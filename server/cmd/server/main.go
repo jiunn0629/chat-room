@@ -1,21 +1,40 @@
 package main
 
 import (
-	"chat-server/db/sqlite"
+	db "chat-server/db/postgres"
 	"chat-server/internal/app"
 	"chat-server/internal/auth"
 	chatroom "chat-server/internal/chat-room"
 	"chat-server/internal/user"
 	"chat-server/router"
+	"fmt"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/lib/pq"
 	"log"
 )
 
 func main() {
 	irisApp := app.NewApp()
-	//dbConn, err := postgres.NewDatabase()
-	dbConn, err := sqlite.NewDatabase()
+	dbConn, err := db.NewDatabase()
 	if err != nil {
 		log.Fatalf("連線至資料庫失敗")
+	}
+	driver, err := postgres.WithInstance(dbConn.GetDB(), &postgres.Config{})
+	if err != nil {
+		panic(err)
+	}
+	m, err := migrate.NewWithDatabaseInstance(
+		"file://db/migrations/",
+		"postgres", driver)
+	if err != nil {
+		panic(err)
+	}
+	err = m.Up()
+	if err != migrate.ErrNoChange {
+		panic(fmt.Errorf("migrate step error: %v", err))
+		return
 	}
 	authRepo := auth.NewRepository(dbConn.GetDB())
 	authSvc := auth.NewService(authRepo)
