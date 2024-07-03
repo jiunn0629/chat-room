@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: chat
+      POSTGRES_USER: example
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chatroom
+
+  chat-room-server:
+    image: chat-room-server
+    container_name: chat-room-server
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - chatroom
+
+volumes:
+  postgres_data:
+
+networks:
+  chatroom:
+    name: chatroom
