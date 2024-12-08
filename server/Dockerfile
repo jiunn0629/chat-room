@@ -1,7 +1,5 @@
 FROM golang:1.21-alpine
 
-RUN apk add --no-cache gcc musl-dev sqlite-dev
-
 WORKDIR /srv/chat-room/src
 
 COPY ./ /srv/chat-room/src

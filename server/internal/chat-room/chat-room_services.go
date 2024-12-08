@@ -3,6 +3,7 @@ package chat_room
 import (
 	"chat-server/definitions"
 	"context"
+	"fmt"
 	"sort"
 )
 
@@ -66,7 +67,12 @@ func (s *service) CreateChatRoom(ctx context.Context, req *definitions.CreateCha
 }
 
 func (s *service) UseUserIdGetChatRoomsId(ctx context.Context, userId string) ([]string, error) {
-	return s.ChatRoomRepository.UseUserIdGetChatRoomsId(ctx, userId)
+	chatRoomsId, err := s.ChatRoomRepository.UseUserIdGetChatRoomsId(ctx, userId)
+	fmt.Println("UseUserIdGetChatRoomsId", chatRoomsId)
+	if err != nil {
+		return nil, err
+	}
+	return chatRoomsId, nil
 }
 
 func (s *service) UseUserIdFriendIdGetChatRoom(ctx context.Context, userId string, friendId string) (string, error) {

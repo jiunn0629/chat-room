@@ -1,6 +1,5 @@
-import {Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {WsService} from "../../../core/services/ws.service";
-import {BehaviorSubject, Subject, takeUntil} from "rxjs";
+import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {BehaviorSubject} from "rxjs";
 import {ChatRoom, Message} from "../../../shared/definitions/shared.definitions";
 import {ChatRoomService} from "../../../shared/services/chat-room.service";
 
@@ -15,7 +14,7 @@ export class ChatRoomMgtComponent implements OnChanges {
     @Input() chatRoom: ChatRoom | undefined;
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['chatRoom'] && changes['chatRoom'].currentValue.id) {
+        if (changes['chatRoom'] && changes['chatRoom'].currentValue) {
             this.message$ = this.chatRoomServie.chatRoomMessageMap.get(changes['chatRoom'].currentValue.id);
         }
     }

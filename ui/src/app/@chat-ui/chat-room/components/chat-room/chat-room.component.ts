@@ -56,7 +56,7 @@ export class ChatRoomComponent implements OnChanges, AfterViewChecked {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['members']) {
+        if (changes['members'] && changes['members'].currentValue) {
             changes['members'].currentValue.forEach((member: Member) => {
                 this.membersMap.set(member.id, member);
             });

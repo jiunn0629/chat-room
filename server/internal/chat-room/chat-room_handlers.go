@@ -2,7 +2,6 @@ package chat_room
 
 import (
 	appDefinitions "chat-server/definitions"
-	"chat-server/util"
 	"context"
 	"fmt"
 	"github.com/gorilla/websocket"
@@ -47,6 +46,7 @@ func (h *Handler) GetChatRoom(ctx iris.Context) {
 func (h *Handler) GetChatRooms(ctx iris.Context) {
 	userId := ctx.Values().GetString("userId")
 	list, err := h.ChatRoomService.GetChatRooms(ctx, userId)
+	fmt.Println(list)
 	if err != nil {
 		ctx.StatusCode(http.StatusInternalServerError)
 		res := appDefinitions.DefaultRes{
@@ -185,7 +185,7 @@ func (h *Handler) ConnectWs(ctx iris.Context) {
 		ID:   clientID,
 		Conn: conn,
 	}
-	list := h.getUserChatRoomsId(ctx)
+	list := h.getUserChatRoomsId(ctx, clientID)
 	for _, chatRoomId := range list {
 		chatRoom, isExist := ChatRooms[chatRoomId]
 		if !isExist {
@@ -221,18 +221,17 @@ func (h *Handler) ConnectWs(ctx iris.Context) {
 //	}
 //}
 
-func (h *Handler) getUserChatRoomsId(ctx iris.Context) []string {
-	token := ctx.Values().GetString("token")
-	claims, err := util.ParseToken(token)
-	if err != nil {
-		ctx.StatusCode(http.StatusUnauthorized)
-		res := appDefinitions.DefaultRes{
-			Message: err.Error(),
-		}
-		_ = ctx.JSON(res)
-	}
+func (h *Handler) getUserChatRoomsId(ctx iris.Context, userId string) []string {
+	//claims, err := util.ParseToken(token)
+	//if err != nil {
+	//	ctx.StatusCode(http.StatusUnauthorized)
+	//	res := appDefinitions.DefaultRes{
+	//		Message: err.Error(),
+	//	}
+	//	_ = ctx.JSON(res)
+	//}
 
-	list, err := h.ChatRoomService.UseUserIdGetChatRoomsId(ctx, claims.ID)
+	list, err := h.ChatRoomService.UseUserIdGetChatRoomsId(ctx, userId)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -262,8 +261,13 @@ func handleWebSocketConnection(h *Handler, client *appDefinitions.Client) {
 	for {
 		var msg appDefinitions.WsMessage
 		if err := client.Conn.ReadJSON(&msg); err != nil {
-			fmt.Println("Error reading message:", err)
-			return
+			// 判斷是否是連線關閉錯誤
+			if websocket.IsCloseError(err, websocket.CloseGoingAway, websocket.CloseNormalClosure) {
+				fmt.Println("WebSocket connection closed:", err)
+			} else {
+				fmt.Println("Error reading message:", err)
+			}
+			break
 		}
 
 		// Add sender ID and timestamp to the received message
